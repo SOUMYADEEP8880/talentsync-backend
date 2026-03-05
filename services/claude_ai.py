@@ -120,3 +120,15 @@ Required skills: {', '.join(skills)}
 Include: role summary, 5 responsibilities, requirements, and nice-to-haves.
 Keep it under 300 words."""
     return _ask(prompt)
+# Aliases for routers
+async def score_resume_vs_jd(resume_text: str, jd_text: str) -> dict:
+    return await score_resume(resume_text, jd_text)
+
+async def perform_gap_analysis(resume_text: str, jd_text: str, current_score: int) -> dict:
+    return await gap_analysis(resume_text, jd_text, current_score)
+
+async def rank_resumes(candidates: list, jd_text: str) -> list:
+    return await rank_candidates(candidates, jd_text)
+
+async def generate_candidate_summary(resume_text: str) -> str:
+    return await executive_summary(resume_text)
