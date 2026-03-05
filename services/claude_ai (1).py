@@ -120,6 +120,27 @@ Return only the summary text, no extra formatting.
     return _ask(prompt)
 
 
+async def extract_skills(resume_text: str) -> list:
+    prompt = f"""
+Extract all technical and professional skills from this resume.
+Return ONLY a JSON array of skill strings (no markdown, no explanation).
+Example: ["Python", "SQL", "React"]
+
+RESUME:
+{resume_text}
+"""
+    raw = _ask(prompt)
+    raw = re.sub(r"```json|```", "", raw).strip()
+    try:
+        return json.loads(raw)
+    except Exception:
+        return []
+
+
+async def generate_exec_summary(resume_text: str) -> str:
+    return await executive_summary(resume_text)
+
+
 async def generate_jd(role: str, company_type: str, skills: list, location: str) -> str:
     prompt = f"""
 Write a professional job description for:
